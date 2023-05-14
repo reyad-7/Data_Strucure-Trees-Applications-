@@ -77,96 +77,140 @@ public:
 
     }
 
+    void remove(int id)
+    {
+        if (searchStudent(id)) {
+            Node *current;  //pointer to traverse the tree
+            Node *trailCurrent; //pointer behind current
 
-//    Node* Findmax(Node* r)
-//    {
-//        if (r == NULL)
-//            return NULL;
-//        else if (r->right == NULL)  // there is no elements in right side of your tree so the root item is the maximum element
-//            return r;
-//        else
-//            return Findmax(r->right);
-//    }
-//
-//    Node* removeStudent (Node *r ,int id ){
-//        if (searchStudent(id)) {
-//            if (r == NULL) // Empty Tree
-//                return NULL;
-//            if (id < r->data.id) // Item exists in left subtree
-//                r->left = removeStudent(root->left, id);
-//            else if (id > r->data.id) // item exists in right subtree
-//                r->right = removeStudent(r->right, id);
-//            else {
-//                if (r->left == NULL && r->right == NULL) // leaf node
-//                    r = NULL;
-//                else if (r->left != NULL && r->right == NULL) // one child on the left
-//                {
-//                    r->data.id = r->left->data.id;
-//                    r->data.fname = r->left->data.fname;
-//                    r->data.lname = r->left->data.lname;
-//                    r->data.department = r->left->data.department;
-//                    r->data.gpa= r->left->data.gpa;
-////                    r->data.= r->left->data.gpa;
-//                    delete r->left;
-//                    r->left = NULL;
-//                }
-//                else if (r->left == NULL && r->right != NULL) // one child on the right
-//                {
-//                    r->data.id = r->right->data.id;
-//                    r->data.fname = r->right->data.fname;
-//                    r->data.lname = r->right->data.lname;
-//                    r->data.department = r->right->data.department;
-//                    r->data.gpa= r->right->data.gpa;
-//                    delete r->right;
-//                    r->right = NULL;
-//                }
-//                else     // has two childes
-//                {
-//                    Node *max = Findmax(r->left);
-//                    r->data = max->data;
-//                    r->left = removeStudent(r->left, max->data.id);
-//                }
-//
-//            }
-//            cout<<"Student is deleted.";
-//            return r;
-//
-//        }
-//        return nullptr;
-//    }
+            if (root == NULL) {
+                cout << "Cannot delete from the empty tree." << endl;
+                return;
+            }
+            if (root->data.id == id) {
+                deleteFromTree(root);
+                return;
+            }
 
+            //if you get here, then the item to be deleted is not the root
+            trailCurrent = root;
 
-//  traverse into the tree and write every node into the file //
+            if (root->data.id > id)
+                current = root->left;
+            else
+                current = root->right;
 
-//
-//    void writeToFile(Node* root, ofstream& fout) {
-//        if (root == nullptr) {
-//            return;
-//        }
-//        writeToFile(root->left, fout);
-//        fout << root->data.id << "\n" << root->data.fname << " " << root->data.lname << "\n" << root->data.gpa << "\n" << root->data.department << "\n";
-//        writeToFile(root->right, fout);
-//    }
+            //search for the item to be deleted.
+            while (current != NULL) {
+                if (current->data.id == id)
+                    break;
+                else {
+                    trailCurrent = current;
+                    if (current->data.id > id)
+                        current = current->left;
+                    else
+                        current = current->right;
+                }
+            }// once the while is done, current points to either NULL or to the node to be deleted
 
+            if (current == NULL)
+                cout << "The delete item is not in the tree." << endl;
+            else if (trailCurrent->data.id > id)
+                deleteFromTree(trailCurrent->left);
+            else
+                deleteFromTree(trailCurrent->right);
+        }
 
-    void addStudentToFile(string filename, Student s) {
-        // Read existing data from file into BST
-        BST bst = readStudentsFromFile(filename);
-        // Add the new student to the BST and write to file
-        bst.addStudent(s);
     }
 
+    void deleteFromTree(Node* &p)
+    {
+        Node *current;    //pointer to traverse
+        //the tree
+        Node *trailCurrent;   //pointer behind current
+        Node *temp;        //pointer to delete the node
 
+        if(p->left == NULL && p->right == NULL)
+        {
+            delete p;
+            p = NULL;
+        }
+        else if(p->left == NULL)
+        {
+            temp = p;
+            p = p->right;
+            delete temp;
+        }
+        else if(p->right == NULL)
+        {
+            temp = p;
+            p = p->left;
+            delete temp;
+        }
+        else
+        {
+            current = p->left;
+            trailCurrent = NULL;
 
+            while(current->right != NULL)
+            {
+                trailCurrent = current;
+                current = current->right;
+            }//end while
 
+            p->data.id = current->data.id;
 
+            if(trailCurrent == NULL) //current did not move;
+                //current == p->left; adjust p
+                p->left = current->left;
+            else
+                trailCurrent->right = current->left;
+
+            delete current;
+        }//end else
+    }//end deleteFromTree
+    
     void printAll(Node* root) {
         if (root == nullptr) {
             return;
         }
         printAll(root->left);
-        cout <<"[" <<root->data.id << ", "<< root->data.fname << " " << root->data.lname<<", " << root->data.gpa  << ", " << root->data.department<<"]" <<endl ;
+        cout << "[" << root->data.id << ", " << root->data.fname << " " << root->data.lname << ", " << root->data.gpa
+             << ", " << root->data.department << "]" << endl;
         printAll(root->right);
+    }
+
+    void printPerDepart(Node* root) {
+        if (root == nullptr) {
+            return;
+        }
+
+        // Create a map to store the number of students in each department
+        map<string, int> deptCounts;
+
+        // Traverse the tree in-order and count the number of students in each department
+        stack<Node*> s;
+        Node* curr = root;
+        while (curr != nullptr || s.empty() == false) {
+            while (curr != nullptr) {
+                s.push(curr);
+                curr = curr->left;
+            }
+
+            curr = s.top();
+            s.pop();
+
+            // Update the count of students in the current department
+            deptCounts[curr->data.department]++;
+
+            // Move to the right subtree
+            curr = curr->right;
+        }
+
+        // Print the results
+        for (auto const& [dept, count] : deptCounts) {
+            cout << dept << " " << count << " Students" << endl;
+        }
     }
 
 

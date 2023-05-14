@@ -1,8 +1,10 @@
 #pragma once
 
-#include <iostream>
-#include <fstream>
-#include <string>
+//#include <iostream>
+//#include <fstream>
+//#include <string>
+
+#include <bits/stdc++.h>
 using namespace std;
 
 struct Student {
