@@ -80,8 +80,8 @@ public:
     void remove(int id)
     {
         if (searchStudent(id)) {
-            Node *current;  //pointer to traverse the tree
-            Node *trailCurrent; //pointer behind current
+            Node *current;
+            Node *trailCurrent;
 
             if (root == NULL) {
                 cout << "Cannot delete from the empty tree." << endl;
@@ -89,10 +89,10 @@ public:
             }
             if (root->data.id == id) {
                 deleteFromTree(root);
+                cout<<"Student is deleted.\n";
                 return;
             }
 
-            //if you get here, then the item to be deleted is not the root
             trailCurrent = root;
 
             if (root->data.id > id)
@@ -100,7 +100,6 @@ public:
             else
                 current = root->right;
 
-            //search for the item to be deleted.
             while (current != NULL) {
                 if (current->data.id == id)
                     break;
@@ -111,7 +110,7 @@ public:
                     else
                         current = current->right;
                 }
-            }// once the while is done, current points to either NULL or to the node to be deleted
+            }
 
             if (current == NULL)
                 cout << "The delete item is not in the tree." << endl;
@@ -125,10 +124,10 @@ public:
 
     void deleteFromTree(Node* &p)
     {
-        Node *current;    //pointer to traverse
+        Node *current;
         //the tree
-        Node *trailCurrent;   //pointer behind current
-        Node *temp;        //pointer to delete the node
+        Node *trailCurrent;
+        Node *temp;
 
         if(p->left == NULL && p->right == NULL)
         {
@@ -160,16 +159,16 @@ public:
 
             p->data.id = current->data.id;
 
-            if(trailCurrent == NULL) //current did not move;
-                //current == p->left; adjust p
+            if(trailCurrent == NULL)
+
                 p->left = current->left;
             else
                 trailCurrent->right = current->left;
 
             delete current;
-        }//end else
-    }//end deleteFromTree
-    
+        }
+    }
+
     void printAll(Node* root) {
         if (root == nullptr) {
             return;
@@ -184,10 +183,8 @@ public:
         if (root == nullptr) {
             return;
         }
-
         // Create a map to store the number of students in each department
         map<string, int> deptCounts;
-
         // Traverse the tree in-order and count the number of students in each department
         stack<Node*> s;
         Node* curr = root;
