@@ -4,7 +4,8 @@
 // Data Structure Assignment III :)
 
 #include "BSTStructure.cpp"
-
+#include "MaxHeap.cpp"
+#include "MinHeap.cpp"
 int main() {
     while (true) {
         int choice;
@@ -63,18 +64,93 @@ int main() {
 
             }
         }
+
         else if (choice ==2){
 //          AVL code     -> take all my code of choice1 (BST tree )  just only change my functions by yours
         }
 
         else if (choice ==3){
-//            min heap code
+            int choice1;
+            MinHeap minHeap;
+            minHeap = minHeap.readStudentsFromFile("input.txt");
+            while (true)
+            {
+                cout << "\nChoose one of the following options:\n"
+                        "\n(using MinHeap) \n"
+                        "1. Add student \n"
+                        "2. Print All (sorted by gpa)\n";
+                cin >> choice1;
+                if (choice1 == 1)
+                {
+                    int id;
+                    string fname, lname, department;
+                    float gpa;
+                    cout << "\n\nadding a student into the tree \n\n";
+                    cout << "id : ";
+                    cin >> id;
+                    cout << "fname : ";
+                    cin >> fname;
+                    cout << "lname:";
+                    cin >> lname;
+                    cout << "gpa:";
+                    cin >> gpa;
+                    cout << "department : ";
+                    cin >> department;
+                    Student newStudent(id, fname, lname, gpa, department);
+                    minHeap.addStudent(newStudent);
+                    cout << "The student is added.\n";
+                }
+                else if (choice1 == 2)
+                {
+                    minHeap.printAll();
+                }
+                else
+                    break;
+            }
         }
 
-        else if (choice ==4){
-//            max heap code
+        else if (choice == 4)
+        {
+            int choice1;
+            MaxHeap maxHeap;
+            maxHeap = maxHeap.readStudentsFromFile("input.txt");
+            while (true)
+            {
+                cout << "\nChoose one of the following options:\n"
+                        "\n(using MaxHeap) \n"
+                        "1. Add student \n"
+                        "2. Print All (sorted by gpa)\n";
+                cin >> choice1;
+                if (choice1 == 1)
+                {
+                    int id;
+                    string fname, lname, department;
+                    float gpa;
+                    cout << "\n\nadding a student into the tree \n\n";
+                    cout << "id : ";
+                    cin >> id;
+                    cout << "fname : ";
+                    cin >> fname;
+                    cout << "lname:";
+                    cin >> lname;
+                    cout << "gpa:";
+                    cin >> gpa;
+                    cout << "department : ";
+                    cin >> department;
+                    Student newStudent(id, fname, lname, gpa, department);
+                    maxHeap.addStudent(newStudent);
+                    cout << "The student is added.\n";
+                }
+                else if (choice1 == 2)
+                {
+                    maxHeap.printAll();
+                }
+                else
+                    break;
+            }
         }
 
-        else break; //  return to the main menu
+        else
+            break; //  return to the main menu
     }
 }

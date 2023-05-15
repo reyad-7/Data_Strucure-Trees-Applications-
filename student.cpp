@@ -1,10 +1,11 @@
-#pragma once
+#ifndef STUDENT_H
+#define STUDENT_H
 
-//#include <iostream>
-//#include <fstream>
-//#include <string>
-
-#include <bits/stdc++.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <map>
+#include <stack>
 using namespace std;
 
 struct Student {
@@ -21,4 +22,9 @@ struct Student {
         cout <<"["<< id << " , " << fname <<lname << " , " << gpa << " , " << department <<"]"<<"\n";
     }
 
+    // this operator for 
+    bool operator>(const Student& other){
+        return gpa > other.gpa;
+    }
 };
+#endif // STUDENT_H
