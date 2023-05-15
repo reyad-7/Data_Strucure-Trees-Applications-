@@ -5,22 +5,22 @@
 #include "student.cpp"
 
 
-class Node {
+class node {
 public:
     Student data;
-    Node* left;
-    Node* right;
-    Node (Student s) : data(s), left(nullptr), right(nullptr) {}
+    node* left;
+    node* right;
+    node (Student s) : data(s), left(nullptr), right(nullptr) {}
 };
 
 
 class BST {
 private:
-    Node* root;
+    node* root;
 public:
     BST() : root(nullptr) {}
 
-    Node *getRoot() {return root;}
+    node *getRoot() {return root;}
 
     BST readStudentsFromFile(string filename) {
         fstream fin(filename);
@@ -39,9 +39,9 @@ public:
         return bst;
     }
 
-    Node* insert(Node* root, Student s) {
+    node* insert(node* root, Student s) {
         if (root == nullptr) {
-            return new Node(s);
+            return new node(s);
         }
         if (s.id < root->data.id) {
             root->left = insert(root->left, s);
@@ -58,7 +58,7 @@ public:
 
 
     bool searchStudent(int id) {
-        Node* current = root;
+        node* current = root;
         while (current != nullptr) {
             if (current->data.id == id) {
                 cout <<"Student is found\n";
@@ -80,8 +80,8 @@ public:
     void remove(int id)
     {
         if (searchStudent(id)) {
-            Node *current;
-            Node *trailCurrent;
+            node *current;
+            node *trailCurrent;
 
             if (root == NULL) {
                 cout << "Cannot delete from the empty tree." << endl;
@@ -122,12 +122,12 @@ public:
 
     }
 
-    void deleteFromTree(Node* &p)
+    void deleteFromTree(node* &p)
     {
-        Node *current;
+        node *current;
         //the tree
-        Node *trailCurrent;
-        Node *temp;
+        node *trailCurrent;
+        node *temp;
 
         if(p->left == NULL && p->right == NULL)
         {
@@ -169,7 +169,7 @@ public:
         }
     }
 
-    void printAll(Node* root) {
+    void printAll(node* root) {
         if (root == nullptr) {
             return;
         }
@@ -179,15 +179,15 @@ public:
         printAll(root->right);
     }
 
-    void printPerDepart(Node* root) {
+    void printPerDepart(node* root) {
         if (root == nullptr) {
             return;
         }
         // Create a map to store the number of students in each department
         map<string, int> deptCounts;
         // Traverse the tree in-order and count the number of students in each department
-        stack<Node*> s;
-        Node* curr = root;
+        stack<node*> s;
+        node* curr = root;
         while (curr != nullptr || s.empty() == false) {
             while (curr != nullptr) {
                 s.push(curr);

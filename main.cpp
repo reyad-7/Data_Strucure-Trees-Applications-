@@ -6,6 +6,8 @@
 #include "BSTStructure.cpp"
 #include "MaxHeap.cpp"
 #include "MinHeap.cpp"
+#include"AVL-tree.cpp"
+
 int main() {
     while (true) {
         int choice;
@@ -66,7 +68,77 @@ int main() {
         }
 
         else if (choice ==2){
-//          AVL code     -> take all my code of choice1 (BST tree )  just only change my functions by yours
+            int choice2;
+            AVL avl ;
+
+            Student s1(1, "Mohamed", "Ali", 3.4, "CS");
+            Student s2(2, "Mona", "Samir", 3.2, "IT");
+            Student s3(3, "Ola", "Maher", 1.2, "CS");
+            Student s4(4, "Magy", "Magdy", 2.3, "DS");
+            Student s5(5, "Omnia", "osama", 3.6, "IS");
+            Student s6(6, "Bob", "Johnson", 3.2, "CS");
+            Student s7(7, "Bob", "Johnson", 3.2, "IT");
+            Student s8(8, "Bob", "Johnson", 3.2, "IT");
+            Student s9(9, "Bob", "Johnson", 3.2, "IS");
+            Student s10(10,"Bob", "Johnson", 3.2, "CS");
+            avl.addStudent(&s1);
+            avl.addStudent(&s2);
+            avl.addStudent(&s3);
+            avl.addStudent(&s4);
+            avl.addStudent(&s5);
+            avl.addStudent(&s6);
+            avl.addStudent(&s7);
+            avl.addStudent(&s8);
+            avl.addStudent(&s9);
+            avl.addStudent(&s10);
+
+            while (true) {
+                cout <<  "\nChoose one of the following options:\n"
+                         "\n(using AVL) \n"
+                         "1. Add student \n"
+                         "2. Remove student\n"
+                         "3. Search student\n"
+                         "4. Print All (sorted by id)\n"
+                         "5. Return to main menu\n";
+                cin >> choice2;
+                if (choice2 == 1) {
+                    int id;
+                    string fname, lname, department;
+                    float gpa;
+                    cout << "\n\nadding a student into the tree \n\n";
+                    cout << "id : ";
+                    cin >> id;
+                    cout << "fname : ";
+                    cin >> fname;
+                    cout << "lname:";
+                    cin >> lname;
+                    cout << "gpa:";
+                    cin >> gpa;
+                    cout << "department : ";
+                    cin >> department;
+                    Student newStudent(id, fname, lname, gpa, department);
+                    avl.addStudent(&newStudent);
+                    cout << "The student is added.\n";
+
+                }
+                else if (choice2 == 2) {
+                    int deleted_id ;
+                    cout <<"id: ";
+                    cin >> deleted_id;
+                    avl.removeStudent(deleted_id);
+                }
+                else if (choice2 == 3) {
+                    int searchedId;
+                    cout << "enter id you search for \n";
+                    cin >> searchedId;
+                    avl.searchStudent(avl.getroot(),searchedId);
+                }
+                else if (choice2 == 4) {
+                    avl.printAllAndDepartmentReport(avl.getroot());
+                }
+                else break;
+
+            }
         }
 
         else if (choice ==3){
