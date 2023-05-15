@@ -22,7 +22,8 @@ struct Student {
         cout <<"["<< id << " , " << fname <<lname << " , " << gpa << " , " << department <<"]"<<"\n";
     }
 
-    // this operator for 
+    // this operator for bigger than operator used in heapfy function 
+    // to compare nodes with each other so that the array becomes a HEAP 
     bool operator>(const Student& other){
         return gpa > other.gpa;
     }
